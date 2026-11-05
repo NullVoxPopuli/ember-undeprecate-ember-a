@@ -120,6 +120,20 @@ The tests compare this `A()` with Ember's `A()` on ember-source 7.4. For each me
 - `sortBy` uses a copy of Ember's `compare`. Objects that have a `compare` method, or whose class has one, sort as comparable instances. Other `EmberObject` instances sort as plain objects.
 - The private methods `beginPropertyChanges`, `endPropertyChanges` and `hasObserverFor` are not added. Ember's `A()` also adds `_super` and `init` as enumerable properties of the array. This `A()` adds neither, so `Object.keys` and `for...in` list fewer keys than with Ember's `A()`.
 
+## Using the methods without `A()`
+
+`ember-undeprecate-ember-a/native-array` exports the methods and getters that `A()` adds. Use it to put them on another object, for example `Array.prototype`:
+
+```js
+import { createNativeArray } from 'ember-undeprecate-ember-a/native-array';
+
+const { methods, accessors } = createNativeArray((array) => array);
+```
+
+- `methods` has the functions, such as `pushObject` and `mapBy`.
+- `accessors` has the property descriptors for `[]`, `firstObject` and `lastObject`.
+- The argument is a function that takes a new array and returns it. `invoke`, `uniq` and `uniqBy` give their result to this function. `A()` uses `A` here.
+
 ## TypeScript
 
 `A()` returns `NativeArray<T>`, which this package also exports:

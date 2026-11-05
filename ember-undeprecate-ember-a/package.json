@@ -17,6 +17,10 @@
       "types": "./declarations/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./native-array": {
+      "types": "./declarations/native-array.d.ts",
+      "default": "./dist/native-array.js"
+    },
     "./babel-plugin": "./babel-plugin.cjs",
     "./addon-main.js": "./addon-main.cjs"
   },

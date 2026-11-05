@@ -4,6 +4,7 @@ import { computed, get, set } from '@ember/object';
 import Mixin from '@ember/object/mixin';
 import * as emberArray from '@ember/array';
 import { A as undeprecatedA } from 'ember-undeprecate-ember-a';
+import { createNativeArray } from 'ember-undeprecate-ember-a/native-array';
 import { A } from 'v1-addon';
 
 class Person {
@@ -427,6 +428,37 @@ module('Unit | A', function () {
       assert.throws(() => Mixin.create({}), /deprecate-mixins/);
     });
   }
+
+  test('createNativeArray methods work from a prototype', function (assert) {
+    let { methods, accessors } = createNativeArray((array) => array);
+    let proto = Object.create(Array.prototype);
+
+    for (let [key, value] of Object.entries(methods)) {
+      Object.defineProperty(proto, key, {
+        configurable: true,
+        enumerable: false,
+        writable: true,
+        value,
+      });
+    }
+
+    Object.defineProperties(proto, accessors);
+
+    let list = Object.setPrototypeOf([2, 1, 2], proto);
+
+    list.pushObject(3);
+    list.removeAt(0);
+
+    assert.deepEqual(Array.from(list), [1, 2, 3]);
+    assert.strictEqual(list.firstObject, 1);
+    assert.strictEqual(list.lastObject, 3);
+    assert.deepEqual(Object.keys(list), ['0', '1', '2']);
+
+    let unique = list.uniq();
+
+    assert.deepEqual(unique, [1, 2, 3]);
+    assert.strictEqual(unique.pushObject, undefined);
+  });
 
   test('does not touch other arrays', function (assert) {
     A([1]);
