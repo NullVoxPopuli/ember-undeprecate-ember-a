@@ -16,7 +16,7 @@ export default {
   output: addon.output(),
 
   plugins: [
-    addon.publicEntrypoints(['index.js']),
+    addon.publicEntrypoints(['index.js', 'native-array.js']),
     addon.dependencies(),
     babel({
       extensions: ['.js', '.ts'],
