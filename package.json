@@ -1,0 +1,12 @@
+{
+  "name": "ember-undeprecate-ember-a-monorepo",
+  "private": true,
+  "repository": "https://github.com/NullVoxPopuli/ember-undeprecate-ember-a",
+  "license": "MIT",
+  "scripts": {
+    "build": "pnpm --filter ember-undeprecate-ember-a build && pnpm --filter v2-addon build",
+    "lint": "pnpm --filter ember-undeprecate-ember-a lint",
+    "test": "pnpm build && pnpm --filter ember-undeprecate-ember-a test && pnpm --filter \"./test-apps/*\" --workspace-concurrency=1 test"
+  },
+  "packageManager": "pnpm@10.33.2"
+}

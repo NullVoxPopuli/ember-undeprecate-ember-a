@@ -1,0 +1,14 @@
+packages:
+  - ember-undeprecate-ember-a
+  - test-apps/*
+  - test-packages/*
+
+allowBuilds:
+  esbuild: false
+
+autoInstallPeers: false
+resolvePeersFromWorkspaceRoot: false
+
+injectWorkspacePackages: true
+syncInjectedDepsAfterScripts:
+  - build
